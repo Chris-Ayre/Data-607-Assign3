@@ -1,0 +1,71 @@
+---
+title: "607_Week3_Assign"
+author: "Chris Ayre"
+date: "2/17/2019"
+output: html_document
+---
+
+```{r}
+library(stringr)
+```
+
+### QUESTION 3 - Copy the introductory example. The vector name stores the extracted names.
+```{r}
+raw.data <-"555-1239Moe Szyslak(636) 555-0113Burns, C. Montgomery555-6542Rev. Timothy Lovejoy555 8904Ned Flanders636-555-3226Simpson, Homer5553642Dr. Julius Hibbert"
+name <- unlist(str_extract_all(raw.data, "[[:alpha:]., ]{2,}"))
+name
+```
+
+1) Use the tools of this chapter to rearrange the vector so that all elements conform to the standard; __first_name last_name__
+
+```{r}
+firstName <- str_extract_all(unlist(str_extract_all(name,"[:alpha:]{1,25} |, [:print:]{1,25}")),"[A-Z](.+?)+[a-z]")
+firstName
+```
+
+```{r}
+lastName <- str_extract_all(unlist(str_extract_all(name,"[a-z] [:alpha:]{1,25}[a-z]$|[:print:]{1,25},")),"[A-z][a-z]+|[A-z][a-z]+,")
+lastName
+```
+
+2) Construct a logical vectore indicating whether a character has a title
+
+```{r}
+titlechecker <- str_detect(firstName, "[[:alpha:]]{2,}\\.")
+titlechecker
+```
+
+3) Construct a logical vectore indicating whether a character has a second name
+
+```{r}
+lastnamechecker <- str_detect(lastName, "[[:alpha:]]+$")
+lastnamechecker
+```
+
+
+### QUESTION 4 - Describe the types of strings that conform to the following regular expressions and construct an example that is matched by the regular expression.
+
+a) [0-9]+\\$
+__a string of one or more digits followed by a dollar sign__
+
+b) \\b[a-z]{1,4}\\b
+__a word of up to four lowercase alphabetic characters__
+
+c) .*?\\.txt$
+__string of characters ending in “.txt”__
+
+d) \\d{2}/\\d{2}/\\d{4}
+__date format of XX/XX/XXXX__
+
+e) <(.+?)>.+?</\\1>
+__string of characters with start and end tags__
+
+### QUESTION 9 - The following code hides  secret message. crack it with R and regular expressions.
+
+```{r}
+secret <- "clcopCow1zmstc0d87wnkig7OvdicpNuggvhryn92Gjuwczi8hqrfpRxs5Aj5dwpn0TanwoUwisdij7Lj8kpf03AT5Idr3coc0bt7yczjatOaootj55t3Nj3ne6c4Sfek.r1w1YwwojigOd6vrfUrbz2.2bkAnbhzgv4R9i05zEcrop.wAgnb.SqoU65fPa1otfb7wEm24k6t3sR9zqe5fy89n6Nd5t9kc4fE905gmc4Rgxo5nhDk!gr"
+
+unlist(str_extract_all(secret, "[A-Z]"))
+```
+
+## CONGRATULATIONS YOU ARE A SUPERNERD
